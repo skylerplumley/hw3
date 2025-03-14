@@ -8,6 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Card Matching',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -70,6 +71,19 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         cards[index].flipped = true;
         flippedcards.add(index);
+      });
+
+      if (flippedcards.length == 2) {
+        checkmatch();
+      }
+    }
+  }
+
+  void checkmatch() {
+    if (cards[flippedcards[0]].front != cards[flippedcards[1]].front) {
+      setState(() {
+        cards[flippedcards[0]].flipped = false;
+        cards[flippedcards[0]].flipped = false;
       });
     }
   }
