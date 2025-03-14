@@ -1,13 +1,4 @@
 import 'package:flutter/material.dart';
-//https://en.wikipedia.org/wiki/File:English_pattern_4_of_clubs.svg
-//https://en.wikipedia.org/wiki/File:English_pattern_9_of_clubs.svg
-//https://en.wikipedia.org/wiki/File:English_pattern_8_of_diamonds.svg
-//https://en.wikipedia.org/wiki/File:English_pattern_3_of_diamonds.svg
-//https://en.wikipedia.org/wiki/File:English_pattern_6_of_spades.svg
-//https://en.wikipedia.org/wiki/File:English_pattern_2_of_spades.svg
-//https://en.wikipedia.org/wiki/File:English_pattern_5_of_hearts.svg
-//https://en.wikipedia.org/wiki/File:English_pattern_7_of_hearts.svg
-//https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.allstardogs.com%2FPages%2FSchools%2FGeorgiaState.html&psig=AOvVaw2umqmOTJh2Kk2Bck1TH9Zp&ust=1742001177093000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKDvwJyyiIwDFQAAAAAdAAAAABAE
 
 void main() {
   runApp(MyApp());
@@ -32,9 +23,43 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+class Cards {
+  final String front;
+  final String back = 'assets/backofcard.jpg';
+  bool flipped;
+
+  Cards({required this.front, this.flipped = false});
+}
+
 class _MyHomePageState extends State<MyHomePage> {
-  final String backofcard =
-      'https://en.wikipedia.org/wiki/File:English_pattern_2_of_spades.svg';
+  List<Cards> cards = [];
+  List<int> flippedcards = [];
+
+  void createdeck() {
+    List<String> fronts = [
+      'assets/card2.png',
+      'assets/card3.png',
+      'assets/card4.png',
+      'assets/card5.png',
+      'assets/card6.png',
+      'assets/card7.png',
+      'assets/card8.png',
+      'assets/card9.png',
+    ];
+  }
+
+  void flip(int index) {
+    /*
+    if (flippedcards.length == 2) {
+      matchtest()
+    } else {
+    */
+    setState(() {
+      cards[index].flipped = true;
+      flippedcards.add(index);
+    });
+    //}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +79,20 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             itemCount: 16,
             itemBuilder: (context, index) {
-              return SizedBox(
-                width: 25,
-                height: 50,
-                child: Card(
-                  child: Image.asset(
-                    'assets/backofcard.jpg',
-                    fit: BoxFit.cover,
+              return GestureDetector(
+                onTap: () => flip(index),
+                child: AnimatedContainer(
+                  duration: Duration(seconds: 1),
+                  curve: Curves.easeInOut,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        cards[index].flipped
+                            ? cards[index].front
+                            : cards[index].back,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               );
