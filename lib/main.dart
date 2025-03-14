@@ -25,15 +25,21 @@ class MyHomePage extends StatefulWidget {
 
 class Cards {
   final String front;
-  final String back = 'assets/backofcard.jpg';
+  final String back;
   bool flipped;
 
-  Cards({required this.front, this.flipped = false});
+  Cards({required this.front, required this.back, this.flipped = false});
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Cards> cards = [];
   List<int> flippedcards = [];
+
+  @override
+  void initState() {
+    super.initState();
+    createdeck();
+  }
 
   void createdeck() {
     List<String> fronts = [
@@ -46,19 +52,25 @@ class _MyHomePageState extends State<MyHomePage> {
       'assets/card8.png',
       'assets/card9.png',
     ];
+
+    List<Cards> doubles = [];
+    for (String front in fronts) {
+      doubles.add(Cards(front: front, back: 'assets/backofcard.jpg'));
+      doubles.add(Cards(front: front, back: 'assets/backofcard.jpg'));
+    }
+
+    setState(() {
+      cards = doubles;
+    });
   }
 
   void flip(int index) {
-    /*
-    if (flippedcards.length == 2) {
-      matchtest()
-    } else {
-    */
-    setState(() {
-      cards[index].flipped = true;
-      flippedcards.add(index);
-    });
-    //}
+    if (!cards[index].flipped) {
+      setState(() {
+        cards[index].flipped = true;
+        flippedcards.add(index);
+      });
+    }
   }
 
   @override
@@ -77,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisSpacing: 8,
               childAspectRatio: 1.2,
             ),
-            itemCount: 16,
+            itemCount: cards.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () => flip(index),
