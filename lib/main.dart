@@ -95,7 +95,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        titleTextStyle: TextStyle(
+            fontSize: 30, fontWeight: FontWeight.bold, color: Colors.pink),
+        backgroundColor: Colors.pink[200],
         title: Text('Card Matching Game'),
       ),
       body: Padding(
