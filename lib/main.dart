@@ -61,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       cards = doubles;
+      cards.shuffle();
     });
   }
 
@@ -78,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Cards'),
+        title: Text('Card Matching Game'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -87,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
               crossAxisCount: 4,
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
-              childAspectRatio: 1.2,
+              childAspectRatio: 1,
             ),
             itemCount: cards.length,
             itemBuilder: (context, index) {
@@ -103,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ? cards[index].front
                             : cards[index].back,
                       ),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
