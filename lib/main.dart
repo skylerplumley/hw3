@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void flip(int index) {
-    if (!cards[index].flipped) {
+    if (!cards[index].flipped && flippedcards.length < 2) {
       setState(() {
         cards[index].flipped = true;
         flippedcards.add(index);
@@ -80,12 +80,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void checkmatch() {
-    if (cards[flippedcards[0]].front != cards[flippedcards[1]].front) {
-      setState(() {
-        cards[flippedcards[0]].flipped = false;
-        cards[flippedcards[0]].flipped = false;
-      });
-    }
+    Future.delayed(Duration(seconds: 1), () {
+      if (cards[flippedcards[0]].front != cards[flippedcards[1]].front) {
+        setState(() {
+          cards[flippedcards[0]].flipped = false;
+          cards[flippedcards[1]].flipped = false;
+        });
+      }
+      flippedcards.clear();
+    });
   }
 
   @override
